@@ -1,6 +1,6 @@
-function catalog(item) {
-  var $container = document.createElement('div')
-  $container.classList.add('item')
+function renderItem(item) {
+  var $item = document.createElement('div')
+  $item.classList.add('item')
   var $img = document.createElement('img')
   $img.classList.add('item-img')
   $img.textContent = item.imageUrl
@@ -20,6 +20,27 @@ function catalog(item) {
   $itemBody.appendChild($name)
   $itemBody.appendChild($brand)
   $itemBody.appendChild($price)
+  return $item
+}
+
+function renderCatalog(catalog) {
+  var $container = document.createElement('div')
+  $container.classList.add('container')
+  var $heading = document.createElement('h1')
+  $heading.textContent = 'Jamazon'
+  var $row = document.createElement('div')
+  $row.classList.add('row')
+  $container.appendChild($heading)
+  $container.appendChild($row)
+
+  for (var i = 0; i < catalog.length; i++) {
+    var $col = document.createElement('div')
+    $col.classList.add('col')
+    var $item = renderItem(catalog[i])
+    $col.appendChild($item)
+    $row.appendChild($col)
+  }
+  return $container
 }
 
 var app = {
