@@ -1,11 +1,35 @@
+function catalog(item) {
+  var $container = document.createElement('div')
+  $container.classList.add('item')
+  var $img = document.createElement('img')
+  $img.classList.add('item-img')
+  $img.textContent = item.imageUrl
+  var $itemBody = document.createElement('div')
+  $itemBody.classList.add('item-body')
+  var $name = document.createElement('h5')
+  $name.classList.add('item-name')
+  $name.textContent = item.name
+  var $brand = document.createElement('h6')
+  $brand.classList.add('item-brand')
+  $brand.textContent = item.brand
+  var $price = document.createElement('h6')
+  $price.classList.add('item-price')
+  $price.textContent = item.price
+  $container.appendChild($img)
+  $container.appendChild($itemBody)
+  $itemBody.appendChild($name)
+  $itemBody.appendChild($brand)
+  $itemBody.appendChild($price)
+}
+
 var app = {
   view: 'catalog',
   catalog: {
     items: [
       {
         itemId: 1,
-        brand: 'Ludwig',
         name: 'Black Beauty',
+        brand: 'Ludwig',
         price: 749.99,
         description: 'A snare drum for people with too many drumsticks.',
         details: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
