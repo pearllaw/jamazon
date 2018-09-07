@@ -189,5 +189,19 @@ function renderDetails(catalogItem) {
 for (var i = 0; i < app.catalog.items.length; i++) {
   var $item = app.catalog.items[i]
 }
+document.body.appendChild($item)
 
-document.body.appendChild(renderDetails($item))
+function renderItemObject(itemId, catalogItems) {
+  for (var i = 0; i < catalogItems.length; i++) {
+    var $item = app.catalog.items[i]
+    var $catalogItem = renderDetails($item)
+    if (itemId === app.catalog.items[i].itemId) {
+      return itemId
+    }
+  }
+  return $catalogItem
+}
+
+var $itemId = app.catalog.items[i].itemId
+var $catalog = app.catalog.items
+document.body.appendChild(renderItemObject($itemId, $catalog))
