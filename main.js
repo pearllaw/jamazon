@@ -145,3 +145,49 @@ function renderApp(app) {
 }
 
 document.body.appendChild(renderApp(app))
+
+function renderDetails(catalogItem) {
+  var $container = document.createElement('div')
+  $container.classList.add('align-self-center', 'm-3')
+  var $img = document.createElement('img')
+  $img.classList.add('float-left')
+  $img.setAttribute('src', catalogItem.imageUrl)
+  $img.setAttribute('style', 'width: 30rem')
+  $img.setAttribute('style', 'height: 30rem')
+  $img.classList.add('align-self-center')
+  var $itemBody = document.createElement('div')
+  $itemBody.classList.add('text-left')
+  var $name = document.createElement('h5')
+  $name.classList.add('mt-5')
+  $name.textContent = catalogItem.name
+  var $brand = document.createElement('h6')
+  $brand.classList.add('text-left')
+  $brand.textContent = catalogItem.brand
+  var $description = document.createElement('p')
+  $description.classList.add('text-left')
+  $description.textContent = catalogItem.description
+  var $details = document.createElement('p')
+  $details.classList.add('text-left')
+  $details.textContent = catalogItem.details
+  var $origin = document.createElement('p')
+  $origin.classList.add('text-left')
+  $origin.textContent = catalogItem.origin
+  var $price = document.createElement('h6')
+  $price.classList.add('text-left')
+  $price.textContent = '$' + catalogItem.price
+  $container.appendChild($img)
+  $container.appendChild($itemBody)
+  $itemBody.appendChild($name)
+  $itemBody.appendChild($brand)
+  $itemBody.appendChild($origin)
+  $itemBody.appendChild($description)
+  $itemBody.appendChild($details)
+  $itemBody.appendChild($price)
+  return $container
+}
+
+for (var i = 0; i < app.catalog.items.length; i++) {
+  var $item = app.catalog.items[i]
+}
+
+document.body.appendChild(renderDetails($item))
