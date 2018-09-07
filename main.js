@@ -20,7 +20,7 @@ var app = {
         description: 'A hand drum for people who like belly dancing.',
         details: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         origin: 'Turkey',
-        imageUrl: 'https://goo.gl/MuuMXc'
+        imageUrl: 'https://sc01.alicdn.com/kf/HTB1zlUxLpXXXXa.XVXXq6xXFXXXl/Arabic-Egyptian-Drum-Darbuka.jpg_350x350.jpg'
       },
       {
         itemId: 3,
@@ -93,7 +93,8 @@ function renderItem(item) {
   var $item = document.createElement('div')
   $item.classList.add('card')
   $item.classList.add('text-center')
-  $item.setAttribute('style', 'width: 20rem')
+  $item.setAttribute('style', 'width: 15rem')
+  $item.setAttribute('style', 'height: 30rem')
   var $img = document.createElement('img')
   $img.classList.add('card-img-top')
   $img.setAttribute('src', item.imageUrl)
@@ -124,15 +125,28 @@ function renderCatalog(catalog) {
   $heading.classList.add('text-center')
   var $row = document.createElement('div')
   $row.classList.add('row')
+  var $rowTwo = document.createElement('div')
+  $rowTwo.classList.add('row')
+  var equalWidth = document.createElement('div')
+  equalWidth.classList.add('w-100')
   $container.appendChild($heading)
   $container.appendChild($row)
+  $container.appendChild($rowTwo)
 
-  for (var i = 0; i < catalog.length; i++) {
+  for (var i = 0; i < 4; i++) {
     var $col = document.createElement('div')
     $col.classList.add('col')
     var $item = renderItem(catalog[i])
     $col.appendChild($item)
     $row.appendChild($col)
+  }
+
+  for (var i = 4; i < 8; i++) {
+    var $col = document.createElement('div')
+    $col.classList.add('col')
+    var $item = renderItem(catalog[i])
+    $col.appendChild($item)
+    $rowTwo.appendChild($col)
   }
   return $container
 }
