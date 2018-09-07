@@ -1,48 +1,3 @@
-function renderItem(item) {
-  var $item = document.createElement('div')
-  $item.classList.add('item')
-  var $img = document.createElement('img')
-  $img.classList.add('item-img')
-  $img.textContent = item.imageUrl
-  var $itemBody = document.createElement('div')
-  $itemBody.classList.add('item-body')
-  var $name = document.createElement('h5')
-  $name.classList.add('item-name')
-  $name.textContent = item.name
-  var $brand = document.createElement('h6')
-  $brand.classList.add('item-brand')
-  $brand.textContent = item.brand
-  var $price = document.createElement('h6')
-  $price.classList.add('item-price')
-  $price.textContent = item.price
-  $container.appendChild($img)
-  $container.appendChild($itemBody)
-  $itemBody.appendChild($name)
-  $itemBody.appendChild($brand)
-  $itemBody.appendChild($price)
-  return $item
-}
-
-function renderCatalog(catalog) {
-  var $container = document.createElement('div')
-  $container.classList.add('container')
-  var $heading = document.createElement('h1')
-  $heading.textContent = 'Jamazon'
-  var $row = document.createElement('div')
-  $row.classList.add('row')
-  $container.appendChild($heading)
-  $container.appendChild($row)
-
-  for (var i = 0; i < catalog.length; i++) {
-    var $col = document.createElement('div')
-    $col.classList.add('col')
-    var $item = renderItem(catalog[i])
-    $col.appendChild($item)
-    $row.appendChild($col)
-  }
-  return $container
-}
-
 var app = {
   view: 'catalog',
   catalog: {
@@ -133,3 +88,54 @@ var app = {
     item: null
   }
 }
+
+function renderItem(item) {
+  var $item = document.createElement('div')
+  $item.classList.add('card')
+  $item.classList.add('text-center')
+  $item.setAttribute('style', 'width: 20rem')
+  var $img = document.createElement('img')
+  $img.classList.add('card-img-top')
+  $img.setAttribute('src', item.imageUrl)
+  var $itemBody = document.createElement('div')
+  $itemBody.classList.add('card-body')
+  var $name = document.createElement('h5')
+  $name.classList.add('card-title')
+  $name.textContent = item.name
+  var $brand = document.createElement('h6')
+  $brand.classList.add('card-subtitle')
+  $brand.textContent = item.brand
+  var $price = document.createElement('h6')
+  $price.classList.add('card-text')
+  $price.textContent = item.price
+  $item.appendChild($img)
+  $item.appendChild($itemBody)
+  $itemBody.appendChild($name)
+  $itemBody.appendChild($brand)
+  $itemBody.appendChild($price)
+  return $item
+}
+
+function renderCatalog(catalog) {
+  var $container = document.createElement('div')
+  $container.classList.add('container')
+  var $heading = document.createElement('h1')
+  $heading.textContent = 'Jamazon'
+  $heading.classList.add('text-center')
+  var $row = document.createElement('div')
+  $row.classList.add('row')
+  $container.appendChild($heading)
+  $container.appendChild($row)
+
+  for (var i = 0; i < catalog.length; i++) {
+    var $col = document.createElement('div')
+    $col.classList.add('col')
+    var $item = renderItem(catalog[i])
+    $col.appendChild($item)
+    $row.appendChild($col)
+  }
+  return $container
+}
+
+var $items = app.catalog.items
+document.body.appendChild(renderCatalog($items))
