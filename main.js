@@ -148,8 +148,9 @@ function renderApp(app) {
   $view.appendChild(renderCatalog($items))
 }
 
-document.body.appendChild(renderApp(app))
+renderApp(app)
 
+// Function rendering all details of one catalog item
 function renderDetails(catalogItem) {
   var $container = document.createElement('div')
   $container.classList.add('align-self-center', 'm-3')
@@ -190,22 +191,26 @@ function renderDetails(catalogItem) {
   return $container
 }
 
-for (var i = 0; i < app.catalog.items.length; i++) {
-  var $item = app.catalog.items[i]
-}
-document.body.appendChild($item)
-
+// Function returning item Object and itemId
 function renderItemObject(itemId, catalogItems) {
   for (var i = 0; i < catalogItems.length; i++) {
-    var $item = app.catalog.items[i]
-    var $catalogItem = renderDetails($item)
-    if (itemId === app.catalog.items[i].itemId) {
-      return itemId
+    var item = renderDetails(catalogItems[i])
+    if (itemId === item.itemId) {
+      return item
     }
   }
-  return $catalogItem
 }
 
-var $itemId = app.catalog.items[i].itemId
-var $catalog = app.catalog.items
-document.body.appendChild(renderItemObject($itemId, $catalog))
+// Click Event Listener
+var $catalogView = document.querySelector('[data-view="catalog"]')
+
+$catalogView.addEventListener('click', function (event) {
+  var $item = event.target.closest('[data-item-id]')
+  if (!$item) return
+  var number = $item.getAttribute('data-item-id')
+  var numberId = Number(number)
+  var clickedItem = renderItemObject(numberId, app.catalog.items)
+  app.view = 'details'
+  app.details.item = clickedItem
+  renderApp(app)
+})
