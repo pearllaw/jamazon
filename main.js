@@ -125,36 +125,23 @@ function renderCatalog(catalog) {
   $heading.classList.add('text-center')
   var $row = document.createElement('div')
   $row.classList.add('row')
-  var $rowTwo = document.createElement('div')
-  $rowTwo.classList.add('row')
-  var equalWidth = document.createElement('div')
-  equalWidth.classList.add('w-100')
   $container.appendChild($heading)
   $container.appendChild($row)
-  $container.appendChild($rowTwo)
 
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < catalog.length; i++) {
     var $col = document.createElement('div')
-    $col.classList.add('col')
+    $col.classList.add('col-6', 'col-sm-3')
     var $item = renderItem(catalog[i])
     $col.appendChild($item)
     $row.appendChild($col)
   }
-
-  for (var i = 4; i < 8; i++) {
-    var $col = document.createElement('div')
-    $col.classList.add('col')
-    var $item = renderItem(catalog[i])
-    $col.appendChild($item)
-    $rowTwo.appendChild($col)
-  }
   return $container
 }
 
-var $items = app.catalog.items
-document.body.appendChild(renderCatalog($items))
-
-function renderApp(state) {
+function renderApp(app) {
+  var $items = app.catalog.items
   var $view = document.querySelector('[data-view="catalog"]')
-  $view.appendChild(renderCatalog(app))
+  $view.appendChild(renderCatalog($items))
 }
+
+document.body.appendChild(renderApp(app))
