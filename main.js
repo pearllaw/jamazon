@@ -89,6 +89,7 @@ var app = {
   }
 }
 
+// Function rendering one catalog item
 function renderItem(item) {
   var $item = document.createElement('div')
   $item.classList.add('card')
@@ -119,6 +120,7 @@ function renderItem(item) {
   return $item
 }
 
+// Function rendering entire catalog
 function renderCatalog(catalog) {
   var $container = document.createElement('div')
   $container.classList.add('container')
@@ -191,7 +193,7 @@ function renderDetails(catalogItem) {
   return $container
 }
 
-// Function returning item Object and itemId
+// Function returning item Object with matching itemId
 function renderItemObject(itemId, catalogItems) {
   for (var i = 0; i < catalogItems.length; i++) {
     var item = renderDetails(catalogItems[i])
@@ -202,7 +204,7 @@ function renderItemObject(itemId, catalogItems) {
 }
 
 // Click Event Listener
-var $catalogView = document.querySelector('[data-view="catalog"]')
+var $catalogView = document.querySelector('[data-view]')
 
 $catalogView.addEventListener('click', function (event) {
   var $item = event.target.closest('[data-item-id]')
@@ -214,3 +216,11 @@ $catalogView.addEventListener('click', function (event) {
   app.details.item = clickedItem
   renderApp(app)
 })
+
+function showView(view) {
+  var $view = document.querySelectorAll('[data-view]')
+  if ($view !== view) {
+    $view.classList.add('hidden')
+  }
+}
+showView(app)
