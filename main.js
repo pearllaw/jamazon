@@ -144,14 +144,6 @@ function renderCatalog(catalog) {
   return $container
 }
 
-function renderApp(app) {
-  var $items = app.catalog.items
-  var $view = document.querySelector('[data-view="catalog"]')
-  $view.appendChild(renderCatalog($items))
-}
-
-renderApp(app)
-
 // Function rendering all details of one catalog item
 function renderDetails(catalogItem) {
   var $container = document.createElement('div')
@@ -214,13 +206,33 @@ $catalogView.addEventListener('click', function (event) {
   var clickedItem = renderItemObject(numberId, app.catalog.items)
   app.view = 'details'
   app.details.item = clickedItem
-  renderApp(app)
+  renderAppState(app)
 })
 
 function showView(view) {
-  var $view = document.querySelectorAll('[data-view]')
-  if ($view !== view) {
-    $view.classList.add('hidden')
+  var $views = document.querySelectorAll('[data-view]')
+  for (var i = 0; i < $views.length; i++) {
+    var $view = $views[i]
+    if ($view.getAttribute('data-view') === view) {
+      $view.classList.remove('hidden')
+    }
+    else {
+      $view.classList.add('hidden')
+    }
   }
 }
-showView(app)
+
+function renderAppState(app) {
+  var $view = document.querySelectorAll('[data-view="' + app.view + '"]')
+  if (app.view === 'catalog') {
+    $view.innerHTML = ''
+    $view.appendChild(renderCatalog(app.catalog.items))
+  }
+  if (app.view === 'details') {
+    $view.innerHTML = ''
+    $view.appendChild(renderDetails(app.details.item))
+  }
+  showView(app)
+}
+
+renderAppState(app.view)
