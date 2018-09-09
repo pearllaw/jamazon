@@ -88,10 +88,7 @@ var app = {
     item: null
   },
   cart: {
-    items: [
-      {
-      }
-    ]
+    items: null
   }
 }
 
@@ -106,9 +103,7 @@ function renderCartItems(cart) {
 // Function rendering one catalog item
 function renderItem(item) {
   var $item = document.createElement('div')
-  $item.classList.add('card')
-  $item.classList.add('text-center')
-  $item.classList.add('p-5')
+  $item.classList.add('card', 'text-center', 'p-5')
   $item.setAttribute('data-item-id', item.itemId)
   $item.setAttribute('style', 'width: 15rem')
   $item.setAttribute('style', 'height: 25rem')
@@ -140,9 +135,7 @@ function renderCatalog(catalog) {
   $container.classList.add('container')
   var $heading = document.createElement('h1')
   $heading.textContent = 'Jamazon'
-  $heading.classList.add('text-center')
-  $heading.classList.add('p-5')
-  $heading.classList.add('text-uppercase')
+  $heading.classList.add('text-center', 'p-5', 'text-uppercase')
   var $row = document.createElement('div')
   $row.classList.add('row')
   $container.appendChild($heading)
@@ -213,6 +206,9 @@ function renderDetails(catalogItem) {
   var $price = document.createElement('h6')
   $price.classList.add('text-left')
   $price.textContent = '$' + catalogItem.price
+  var $button = document.createElement('button')
+  $button.classList.add('btn', 'btn-primary', 'float-right', 'mr-3')
+  $button.textContent = 'Add'
   $container.appendChild($img)
   $container.appendChild($itemBody)
   $itemBody.appendChild($name)
@@ -221,6 +217,7 @@ function renderDetails(catalogItem) {
   $itemBody.appendChild($description)
   $itemBody.appendChild($details)
   $itemBody.appendChild($price)
+  $itemBody.appendChild($button)
   return $container
 }
 
