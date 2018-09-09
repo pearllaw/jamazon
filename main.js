@@ -167,7 +167,7 @@ $catalogView.addEventListener('click', function (event) {
 // Click Event Listener on details page
 var $detailView = document.querySelector('[data-view="details"]')
 $detailView.addEventListener('click', function (event) {
-  if (event.target.getAttribute('id') === 'button') {
+  if (event.target.getAttribute('id') === 'addButton') {
     var item = app.details.item
     app.cart.push(item)
     app.view = 'cart'
@@ -216,10 +216,14 @@ function renderDetails(catalogItem) {
   var $price = document.createElement('h6')
   $price.classList.add('text-left')
   $price.textContent = '$' + catalogItem.price
-  var $button = document.createElement('button')
-  $button.classList.add('btn', 'btn-primary', 'float-right', 'mr-3')
-  $button.setAttribute('id', 'button')
-  $button.textContent = 'Add'
+  var $addButton = document.createElement('button')
+  $addButton.classList.add('btn', 'btn-outline-primary', 'float-right', 'mr-3', 'd-inline-flex')
+  $addButton.setAttribute('id', 'addButton')
+  $addButton.textContent = 'Add'
+  var $backButton = document.createElement('button')
+  $backButton.classList.add('btn', 'btn-outline-secondary', 'float-right', 'mr-3', 'd-inline-flex')
+  $backButton.setAttribute('id', 'backButton')
+  $backButton.textContent = 'Back'
   $container.appendChild($img)
   $container.appendChild($itemBody)
   $itemBody.appendChild($name)
@@ -228,7 +232,8 @@ function renderDetails(catalogItem) {
   $itemBody.appendChild($description)
   $itemBody.appendChild($details)
   $itemBody.appendChild($price)
-  $itemBody.appendChild($button)
+  $itemBody.appendChild($backButton)
+  $itemBody.appendChild($addButton)
   return $container
 }
 
