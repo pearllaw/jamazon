@@ -97,13 +97,11 @@ var app = {
 
 // Function rendering cart item count
 function renderCartItems(cart) {
-  var $count = document.createElement('span')
+  var $count = document.createElement('div')
   $count.classList.add('cart-item-count')
   $count.textContent = 'Cart' + cart
   return $count
 }
-
-renderCartItems(app.cart.items)
 
 // Function rendering one catalog item
 function renderItem(item) {
@@ -248,6 +246,10 @@ function renderApp(app) {
   if (app.view === 'details') {
     $view.innerHTML = ''
     $view.appendChild(renderDetails(app.details.item))
+  }
+  if (app.view === 'cart') {
+    $view.innerHTML = ''
+    $view.appendChild(renderCartItems(app.cart.items))
   }
   showView(app.view)
 }
