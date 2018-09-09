@@ -144,6 +144,31 @@ function renderCatalog(catalog) {
   return $container
 }
 
+// Click Event Listener
+var $catalogView = document.querySelector('[data-view]')
+
+$catalogView.addEventListener('click', function (event) {
+  var $item = event.target.closest('[data-item-id]')
+  if (!$item) return
+  var number = $item.getAttribute('data-item-id')
+  var numberId = Number(number)
+  var clickedItem = renderItemObject(numberId, app.catalog.items)
+  app.view = 'details'
+  app.details.item = clickedItem
+  renderApp(app)
+  renderDetails(app)
+})
+
+// Function returning item Object with matching itemId
+function renderItemObject(itemId, catalogItems) {
+  for (var i = 0; i < catalogItems.length; i++) {
+    var item = catalogItems[i]
+    if (itemId === item.itemId) {
+      return item
+    }
+  }
+}
+
 // Function rendering all details of one catalog item
 function renderDetails(catalogItem) {
   var $container = document.createElement('div')
@@ -185,30 +210,6 @@ function renderDetails(catalogItem) {
   return $container
 }
 
-// Function returning item Object with matching itemId
-function renderItemObject(itemId, catalogItems) {
-  for (var i = 0; i < catalogItems.length; i++) {
-    var item = renderDetails(catalogItems[i])
-    if (itemId === item.itemId) {
-      return item
-    }
-  }
-}
-
-// Click Event Listener
-var $catalogView = document.querySelector('[data-view]')
-
-$catalogView.addEventListener('click', function (event) {
-  var $item = event.target.closest('[data-item-id]')
-  if (!$item) return
-  var number = $item.getAttribute('data-item-id')
-  var numberId = Number(number)
-  var clickedItem = renderItemObject(numberId, app.catalog.items)
-  app.view = 'details'
-  app.details.item = clickedItem
-  renderAppState(app)
-})
-
 function showView(view) {
   var $views = document.querySelectorAll('[data-view]')
   for (var i = 0; i < $views.length; i++) {
@@ -222,8 +223,8 @@ function showView(view) {
   }
 }
 
-function renderAppState(app) {
-  var $view = document.querySelectorAll('[data-view="' + app.view + '"]')
+function renderApp(app) {
+  var $view = document.querySelector('[data-view="' + app.view + '"]')
   if (app.view === 'catalog') {
     $view.innerHTML = ''
     $view.appendChild(renderCatalog(app.catalog.items))
@@ -232,7 +233,7 @@ function renderAppState(app) {
     $view.innerHTML = ''
     $view.appendChild(renderDetails(app.details.item))
   }
-  showView(app)
+  showView(app.view)
 }
 
-renderAppState(app.view)
+renderApp(app)
