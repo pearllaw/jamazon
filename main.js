@@ -90,11 +90,20 @@ var app = {
   cart: {
     items: [
       {
-
       }
     ]
   }
 }
+
+// Function rendering cart item count
+function renderCartItems(cart) {
+  var $count = document.createElement('span')
+  $count.classList.add('cart-item-count')
+  $count.textContent = 'Cart' + cart
+  return $count
+}
+
+renderCartItems(app.cart.items)
 
 // Function rendering one catalog item
 function renderItem(item) {
