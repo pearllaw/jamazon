@@ -174,6 +174,10 @@ $detailView.addEventListener('click', function (event) {
     renderCartCount(app.cart)
     renderApp(app)
   }
+  if (event.target.getAttribute('id') === 'backButton') {
+    app.view = 'catalog'
+    renderApp(app)
+  }
 })
 
 // Function returning item Object with matching itemId
