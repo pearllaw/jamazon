@@ -89,12 +89,15 @@ var app = {
   }
 }
 
+// Function rendering one catalog item
 function renderItem(item) {
   var $item = document.createElement('div')
   $item.classList.add('card')
   $item.classList.add('text-center')
+  $item.classList.add('p-5')
+  $item.setAttribute('data-item-id', item.itemId)
   $item.setAttribute('style', 'width: 15rem')
-  $item.setAttribute('style', 'height: 30rem')
+  $item.setAttribute('style', 'height: 25rem')
   var $img = document.createElement('img')
   $img.classList.add('card-img-top')
   $img.setAttribute('src', item.imageUrl)
@@ -117,12 +120,15 @@ function renderItem(item) {
   return $item
 }
 
+// Function rendering entire catalog
 function renderCatalog(catalog) {
   var $container = document.createElement('div')
   $container.classList.add('container')
   var $heading = document.createElement('h1')
   $heading.textContent = 'Jamazon'
   $heading.classList.add('text-center')
+  $heading.classList.add('p-5')
+  $heading.classList.add('text-uppercase')
   var $row = document.createElement('div')
   $row.classList.add('row')
   $container.appendChild($heading)
@@ -138,10 +144,96 @@ function renderCatalog(catalog) {
   return $container
 }
 
-function renderApp(app) {
-  var $items = app.catalog.items
-  var $view = document.querySelector('[data-view="catalog"]')
-  $view.appendChild(renderCatalog($items))
+// Click Event Listener
+var $catalogView = document.querySelector('[data-view]')
+
+$catalogView.addEventListener('click', function (event) {
+  var $item = event.target.closest('[data-item-id]')
+  if (!$item) return
+  var number = $item.getAttribute('data-item-id')
+  var numberId = Number(number)
+  var clickedItem = renderItemObject(numberId, app.catalog.items)
+  app.view = 'details'
+  app.details.item = clickedItem
+  renderApp(app)
+  renderDetails(app)
+})
+
+// Function returning item Object with matching itemId
+function renderItemObject(itemId, catalogItems) {
+  for (var i = 0; i < catalogItems.length; i++) {
+    var item = catalogItems[i]
+    if (itemId === item.itemId) {
+      return item
+    }
+  }
 }
 
-document.body.appendChild(renderApp(app))
+// Function rendering all details of one catalog item
+function renderDetails(catalogItem) {
+  var $container = document.createElement('div')
+  $container.classList.add('align-self-center', 'm-3')
+  var $img = document.createElement('img')
+  $img.classList.add('float-left')
+  $img.setAttribute('src', catalogItem.imageUrl)
+  $img.setAttribute('style', 'width: 30rem')
+  $img.setAttribute('style', 'height: 30rem')
+  $img.classList.add('align-self-center')
+  var $itemBody = document.createElement('div')
+  $itemBody.classList.add('text-left')
+  var $name = document.createElement('h5')
+  $name.classList.add('mt-5')
+  $name.textContent = catalogItem.name
+  var $brand = document.createElement('h6')
+  $brand.classList.add('text-left')
+  $brand.textContent = catalogItem.brand
+  var $description = document.createElement('p')
+  $description.classList.add('text-left')
+  $description.textContent = catalogItem.description
+  var $details = document.createElement('p')
+  $details.classList.add('text-left')
+  $details.textContent = catalogItem.details
+  var $origin = document.createElement('p')
+  $origin.classList.add('text-left')
+  $origin.textContent = catalogItem.origin
+  var $price = document.createElement('h6')
+  $price.classList.add('text-left')
+  $price.textContent = '$' + catalogItem.price
+  $container.appendChild($img)
+  $container.appendChild($itemBody)
+  $itemBody.appendChild($name)
+  $itemBody.appendChild($brand)
+  $itemBody.appendChild($origin)
+  $itemBody.appendChild($description)
+  $itemBody.appendChild($details)
+  $itemBody.appendChild($price)
+  return $container
+}
+
+function showView(view) {
+  var $views = document.querySelectorAll('[data-view]')
+  for (var i = 0; i < $views.length; i++) {
+    var $view = $views[i]
+    if ($view.getAttribute('data-view') === view) {
+      $view.classList.remove('hidden')
+    }
+    else {
+      $view.classList.add('hidden')
+    }
+  }
+}
+
+function renderApp(app) {
+  var $view = document.querySelector('[data-view="' + app.view + '"]')
+  if (app.view === 'catalog') {
+    $view.innerHTML = ''
+    $view.appendChild(renderCatalog(app.catalog.items))
+  }
+  if (app.view === 'details') {
+    $view.innerHTML = ''
+    $view.appendChild(renderDetails(app.details.item))
+  }
+  showView(app.view)
+}
+
+renderApp(app)
