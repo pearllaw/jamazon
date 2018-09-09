@@ -124,11 +124,14 @@ function renderItem(item) {
 function renderCatalog(catalog) {
   var $container = document.createElement('div')
   $container.classList.add('container')
+  var $cartCount = renderCartCount(app.cart)
+  $cartCount.classList.add('float-right', 'p-3')
   var $heading = document.createElement('h1')
   $heading.textContent = 'Jamazon'
   $heading.classList.add('text-center', 'p-5', 'text-uppercase')
   var $row = document.createElement('div')
   $row.classList.add('row')
+  $container.appendChild($cartCount)
   $container.appendChild($heading)
   $container.appendChild($row)
 
@@ -172,6 +175,7 @@ $detailView.addEventListener('click', function (event) {
     app.cart.push(item)
     app.view = 'cart'
     renderCartCount(app.cart)
+    renderApp(app)
   }
 })
 
@@ -249,12 +253,11 @@ function renderApp(app) {
   if (app.view === 'catalog') {
     $view.innerHTML = ''
     $view.appendChild(renderCatalog(app.catalog.items))
+    $view.appendChild(renderCartCount(app.cart))
   }
-  if (app.view === 'details') {
+  if (app.view === 'details' || app.view === 'cart') {
     $view.innerHTML = ''
     $view.appendChild(renderDetails(app.details.item))
-  }
-  if (app.view === 'cart') {
     $view.appendChild(renderCartCount(app.cart))
   }
   showView(app.view)
