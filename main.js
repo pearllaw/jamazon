@@ -98,7 +98,7 @@ function renderItem(item) {
   $item.setAttribute('style', 'width: 15rem')
   $item.setAttribute('style', 'height: 25rem')
   var $img = document.createElement('img')
-  $img.classList.add('card-img-top')
+  $img.classList.add('card-img-top', 'align-middle')
   $img.setAttribute('src', item.imageUrl)
   var $itemBody = document.createElement('div')
   $itemBody.classList.add('card-body')
