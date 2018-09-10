@@ -86,15 +86,14 @@ var app = {
   },
   details: {
     item: null
-  }
+  },
+  cart: [
+  ]
 }
 
-// Function rendering one catalog item
 function renderItem(item) {
   var $item = document.createElement('div')
-  $item.classList.add('card')
-  $item.classList.add('text-center')
-  $item.classList.add('p-5')
+  $item.classList.add('card', 'text-center', 'p-5')
   $item.setAttribute('data-item-id', item.itemId)
   $item.setAttribute('style', 'width: 15rem')
   $item.setAttribute('style', 'height: 25rem')
@@ -120,15 +119,12 @@ function renderItem(item) {
   return $item
 }
 
-// Function rendering entire catalog
 function renderCatalog(catalog) {
   var $container = document.createElement('div')
   $container.classList.add('container')
   var $heading = document.createElement('h1')
   $heading.textContent = 'Jamazon'
-  $heading.classList.add('text-center')
-  $heading.classList.add('p-5')
-  $heading.classList.add('text-uppercase')
+  $heading.classList.add('text-center', 'p-5', 'text-uppercase')
   var $row = document.createElement('div')
   $row.classList.add('row')
   $container.appendChild($heading)
@@ -144,9 +140,19 @@ function renderCatalog(catalog) {
   return $container
 }
 
-// Click Event Listener
-var $catalogView = document.querySelector('[data-view]')
+function renderCartCount(item) {
+  var $cartCount = document.querySelector('.cart-count')
+  var $number = document.createElement('span')
+  $number.textContent = item.length
+  var $bracketOpen = document.createTextNode('Cart (')
+  var $bracketClose = document.createTextNode(')')
+  $cartCount.innerHTML = ''
+  $cartCount.appendChild($bracketOpen)
+  $cartCount.appendChild($number)
+  $cartCount.appendChild($bracketClose)
+}
 
+var $catalogView = document.querySelector('[data-view="catalog"]')
 $catalogView.addEventListener('click', function (event) {
   var $item = event.target.closest('[data-item-id]')
   if (!$item) return
@@ -159,7 +165,16 @@ $catalogView.addEventListener('click', function (event) {
   renderDetails(app)
 })
 
-// Function returning item Object with matching itemId
+var $detailView = document.querySelector('[data-view="details"]')
+$detailView.addEventListener('click', function (event) {
+  if (event.target.getAttribute('id') === 'button') {
+    var item = app.details.item
+    app.cart.push(item)
+    app.view = 'details'
+    renderApp(app)
+  }
+})
+
 function renderItemObject(itemId, catalogItems) {
   for (var i = 0; i < catalogItems.length; i++) {
     var item = catalogItems[i]
@@ -169,20 +184,18 @@ function renderItemObject(itemId, catalogItems) {
   }
 }
 
-// Function rendering all details of one catalog item
 function renderDetails(catalogItem) {
   var $container = document.createElement('div')
-  $container.classList.add('align-self-center', 'm-3')
+  $container.classList.add('m-3', 'row')
   var $img = document.createElement('img')
-  $img.classList.add('float-left')
+  $img.classList.add('col-6', 'img-fluid')
   $img.setAttribute('src', catalogItem.imageUrl)
   $img.setAttribute('style', 'width: 30rem')
-  $img.setAttribute('style', 'height: 30rem')
-  $img.classList.add('align-self-center')
+  $img.setAttribute('style', 'height: 25rem')
   var $itemBody = document.createElement('div')
-  $itemBody.classList.add('text-left')
+  $itemBody.classList.add('col')
   var $name = document.createElement('h5')
-  $name.classList.add('mt-5')
+  $name.classList.add('mt-5', 'text-left')
   $name.textContent = catalogItem.name
   var $brand = document.createElement('h6')
   $brand.classList.add('text-left')
@@ -199,6 +212,10 @@ function renderDetails(catalogItem) {
   var $price = document.createElement('h6')
   $price.classList.add('text-left')
   $price.textContent = '$' + catalogItem.price
+  var $button = document.createElement('button')
+  $button.classList.add('btn', 'btn-primary', 'float-right', 'mr-3')
+  $button.setAttribute('id', 'button')
+  $button.textContent = 'Add'
   $container.appendChild($img)
   $container.appendChild($itemBody)
   $itemBody.appendChild($name)
@@ -207,6 +224,7 @@ function renderDetails(catalogItem) {
   $itemBody.appendChild($description)
   $itemBody.appendChild($details)
   $itemBody.appendChild($price)
+  $itemBody.appendChild($button)
   return $container
 }
 
@@ -234,6 +252,7 @@ function renderApp(app) {
     $view.appendChild(renderDetails(app.details.item))
   }
   showView(app.view)
+  renderCartCount(app.cart)
 }
 
 renderApp(app)
