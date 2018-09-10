@@ -150,7 +150,38 @@ function renderCartCount(cart) {
   return $count
 }
 
-// Click Event Listener on catalog page
+// Function returning Bootstrap styled DOM of cart items
+function renderCartItem(item) {
+  var $cart = document.querySelector('[data-view="cartView"]')
+  var $heading = document.createElement('h1')
+  $heading.classList.add('text-center', 'p-5', 'text-uppercase')
+  $heading.textContent = 'Shopping Cart'
+  var $itemList = document.createElement('div')
+  $itemList.classList.add('list-group', 'align-items-start')
+  var $img = document.createElement('img')
+  $img.setAttribute('src', item.imageUrl)
+  $img.classList.add('float-left')
+  var $name = document.createElement('h3')
+  $name.classList.add('float-right')
+  $name.textContent = item.name
+  var $brand = document.createElement('h4')
+  $brand.classList.add('float-right')
+  $brand.textContent = item.brand
+  var $price = document.createElement('h5')
+  $price.classList.add('float-right')
+  $price.textContent = item.price
+  $cart.appendChild($heading)
+  $cart.appendChild($itemList)
+  $itemList.appendChild($img)
+  $itemList.appendChild($name)
+  $itemList.appendChild($brand)
+  $itemList.appendChild($price)
+  return $cart
+}
+
+renderCartItem()
+
+// Click Event Listener from catalog to details page
 var $catalogView = document.querySelector('[data-view="catalog"]')
 $catalogView.addEventListener('click', function (event) {
   var $item = event.target.closest('[data-item-id]')
@@ -164,7 +195,7 @@ $catalogView.addEventListener('click', function (event) {
   renderDetails(app)
 })
 
-// Click Event Listener on details page
+// Click Event Listener for add button
 var $detailView = document.querySelector('[data-view="details"]')
 $detailView.addEventListener('click', function (event) {
   if (event.target.getAttribute('id') === 'addButton') {
@@ -174,6 +205,11 @@ $detailView.addEventListener('click', function (event) {
     renderCartCount(app.cart)
     renderApp(app)
   }
+})
+
+// Click Event Listener for back button
+var $cartView = document.querySelector('[data-view="cart"]')
+$cartView.addEventListener('click', function (event) {
   if (event.target.getAttribute('id') === 'backButton') {
     app.view = 'catalog'
     renderApp(app)
