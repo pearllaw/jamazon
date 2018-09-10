@@ -95,7 +95,7 @@ function renderItem(item) {
   var $item = document.createElement('div')
   $item.classList.add('card', 'text-center', 'p-5')
   $item.setAttribute('data-item-id', item.itemId)
-  $item.setAttribute('style', 'width: 15rem')
+  $item.setAttribute('style', 'width: 40rem')
   $item.setAttribute('style', 'height: 25rem')
   var $img = document.createElement('img')
   $img.classList.add('card-img-top', 'align-middle')
@@ -174,7 +174,32 @@ function renderCartItem(item) {
   return $item
 }
 
-renderCartItem()
+function renderAllCartItems(cart) {
+  var $container = document.createElement('div')
+  $container.classList.add('container')
+  var $heading = document.createElement('h1')
+  $heading.classList.add('text-center', 'p-5', 'text-uppercase')
+  $heading.textContent = 'Shopping Cart'
+  var $cart = document.createElement('div')
+  $cart.classList.add('list-group')
+  $container.appendChild($heading)
+  $container.appendChild($cart)
+
+  for (var i = 0; i < app.cart.length; i++) {
+    var cartItem = renderCartItem(cart[i])
+    var count = app.cart.length
+    var total = 0
+    for (cartItem in app.cart) {
+      total += app.cart[cartItem.price]
+    }
+    $cart.appendChild(cartItem)
+    $cart.appendChild(count)
+    $cart.appendChild(total)
+  }
+  return $container
+}
+
+renderAllCartItems()
 
 var $catalogView = document.querySelector('[data-view="catalog"]')
 $catalogView.addEventListener('click', function (event) {
@@ -191,10 +216,14 @@ $catalogView.addEventListener('click', function (event) {
 
 var $detailView = document.querySelector('[data-view="details"]')
 $detailView.addEventListener('click', function (event) {
-  if (event.target.getAttribute('id') === 'addButton') {
+  if (event.target.getAttribute('id') === 'add-button') {
     var item = app.details.item
     app.cart.push(item)
     app.view = 'details'
+    renderApp(app)
+  }
+  if (event.target.getAttribute('id') === 'back-button') {
+    app.view = 'catalog'
     renderApp(app)
   }
 })
@@ -238,11 +267,11 @@ function renderDetails(catalogItem) {
   $price.textContent = '$' + catalogItem.price
   var $add = document.createElement('button')
   $add.classList.add('btn', 'btn-outline-primary', 'float-right', 'mr-3', 'd-inline-flex')
-  $add.setAttribute('id', 'addButton')
+  $add.setAttribute('id', 'add-button')
   $add.textContent = 'Add'
   var $back = document.createElement('button')
   $back.classList.add('btn', 'btn-outline-secondary', 'float-right', 'mr-3', 'd-inline-flex')
-  $back.setAttribute('id', 'backButton')
+  $back.setAttribute('id', 'back-button')
   $back.textContent = 'Back'
   $container.appendChild($img)
   $container.appendChild($itemBody)
