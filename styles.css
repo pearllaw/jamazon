@@ -1,3 +1,8 @@
 .hidden {
   display: none;
 }
+
+.cart-count {
+  float: right;
+  padding: 1.5rem;
+}
