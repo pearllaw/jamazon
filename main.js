@@ -150,14 +150,10 @@ function renderCartCount(cart) {
   return $count
 }
 
-// Function returning Bootstrap styled DOM of cart items
+// Function returning a cart item
 function renderCartItem(item) {
-  var $cart = document.querySelector('[data-view="cartView"]')
-  var $heading = document.createElement('h1')
-  $heading.classList.add('text-center', 'p-5', 'text-uppercase')
-  $heading.textContent = 'Shopping Cart'
-  var $itemList = document.createElement('div')
-  $itemList.classList.add('list-group', 'align-items-start')
+  var $container = document.createElement('div')
+  $container.classList.add('d-flex', 'w-100', 'justify-content-between')
   var $img = document.createElement('img')
   $img.setAttribute('src', item.imageUrl)
   $img.classList.add('float-left')
@@ -170,16 +166,42 @@ function renderCartItem(item) {
   var $price = document.createElement('h5')
   $price.classList.add('float-right')
   $price.textContent = item.price
-  $cart.appendChild($heading)
-  $cart.appendChild($itemList)
-  $itemList.appendChild($img)
-  $itemList.appendChild($name)
-  $itemList.appendChild($brand)
-  $itemList.appendChild($price)
-  return $cart
+  $container.appendChild($img)
+  $container.appendChild($name)
+  $container.appendChild($brand)
+  $container.appendChild($price)
+  return $container
 }
 
-renderCartItem()
+// Function rendering all cart items
+function renderAllItems(items) {
+  var $container = document.createElement('div')
+  $container.classList.add('container')
+  var $list = document.createElement('div')
+  $list.classList.add('list-group')
+  var $heading = document.createElement('h1')
+  $heading.classList.add('text-center', 'p-5', 'text-uppercase')
+  $heading.textContent = 'Shopping Cart'
+  $container.appendChild($list)
+  $container.appendChild($heading)
+
+  for (var i = 0; i < items.length; i++) {
+    var item = renderCartItem(items[i])
+    var count = document.createElement('h5')
+    count.textContent = items.length + ' Items'
+    var total = document.createElement('h5')
+    total.textContent += '$' + items.price
+    var $itemList = document.createElement('div')
+    $itemList.classList.add('list-group-item', 'flex-column', 'align-items-start')
+    $itemList.appendChild(item)
+    $list.appendChild($itemList)
+    $container.appendChild(count)
+    $container.appendChild(total)
+  }
+  return $container
+}
+
+renderAllItems()
 
 // Click Event Listener from catalog to details page
 var $catalogView = document.querySelector('[data-view="catalog"]')
