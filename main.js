@@ -152,6 +152,30 @@ function renderCartCount(item) {
   $cartCount.appendChild($bracketClose)
 }
 
+function renderCartItem(item) {
+  var $item = document.createElement('div')
+  $item.classList.add('list-group-item', 'flex-column', 'align-items')
+  var $img = document.createElement('img')
+  $img.setAttribute('src', item.imageUrl)
+  $img.classList.add('float-left')
+  var $name = document.createElement('h3')
+  $name.classList.add('float-right')
+  $name.textContent = item.name
+  var $brand = document.createElement('h4')
+  $brand.classList.add('float-right')
+  $brand.textContent = item.brand
+  var $price = document.createElement('h5')
+  $price.classList.add('float-right')
+  $price.textContent = item.price
+  $item.appendChild($img)
+  $item.appendChild($name)
+  $item.appendChild($brand)
+  $item.appendChild($price)
+  return $item
+}
+
+renderCartItem()
+
 var $catalogView = document.querySelector('[data-view="catalog"]')
 $catalogView.addEventListener('click', function (event) {
   var $item = event.target.closest('[data-item-id]')
