@@ -178,7 +178,7 @@ function renderCartItem(item) {
 
 function renderAllCartItems(cart) {
   var $container = document.createElement('div')
-  $container.classList.add('container')
+  $container.classList.add('container', 'text-center')
   var $heading = document.createElement('h1')
   $heading.classList.add('text-center', 'p-5', 'text-uppercase')
   $heading.textContent = 'Shopping Cart'
@@ -204,11 +204,16 @@ function renderAllCartItems(cart) {
   $container.appendChild(total)
 
   var button = document.createElement('button')
-  button.classList.add('btn', 'btn-success', 'block', 'align-self-center')
+  button.classList.add('btn', 'btn-outline-dark', 'center-block', 'm-3')
   button.setAttribute('id', 'shop-button')
   button.textContent = 'Continue Shopping'
   $container.appendChild(button)
 
+  var checkout = document.createElement('button')
+  checkout.classList.add('btn', 'btn-outline-dark', 'center-block', 'm-3')
+  checkout.setAttribute('id', 'checkout-button')
+  checkout.textContent = 'Checkout'
+  $container.appendChild(checkout)
   return $container
 }
 
