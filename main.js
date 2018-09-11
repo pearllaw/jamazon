@@ -95,10 +95,10 @@ function renderItem(item) {
   var $item = document.createElement('div')
   $item.classList.add('card', 'text-center', 'p-5')
   $item.setAttribute('data-item-id', item.itemId)
-  $item.setAttribute('style', 'width: 40rem')
-  $item.setAttribute('style', 'height: 25rem')
+  $item.setAttribute('style', 'width: 50rem')
+  $item.setAttribute('style', 'height: 20rem')
   var $img = document.createElement('img')
-  $img.classList.add('card-img-top', 'align-middle')
+  $img.classList.add('card-img-top')
   $img.setAttribute('src', item.imageUrl)
   var $itemBody = document.createElement('div')
   $itemBody.classList.add('card-body')
@@ -154,18 +154,20 @@ function renderCartCount(item) {
 
 function renderCartItem(item) {
   var $item = document.createElement('div')
-  $item.classList.add('list-group-item', 'flex-column', 'align-items')
+  $item.classList.add('my-auto', 'd-inline-flex')
   var $img = document.createElement('img')
+  $img.classList.add('img-wrapper', 'p-3')
   $img.setAttribute('src', item.imageUrl)
-  $img.classList.add('float-left')
+  $img.setAttribute('style', 'width: 20rem')
+  $img.setAttribute('style', 'height: 20rem')
   var $name = document.createElement('h3')
-  $name.classList.add('float-right')
+  $name.classList.add('text-left', 'p-2', 'col', 'align-self-center')
   $name.textContent = item.name
   var $brand = document.createElement('h4')
-  $brand.classList.add('float-right')
+  $brand.classList.add('text-left', 'p-2', 'col', 'align-self-center')
   $brand.textContent = item.brand
   var $price = document.createElement('h5')
-  $price.classList.add('float-right')
+  $price.classList.add('text-left', 'p-2', 'col', 'align-self-center')
   $price.textContent = '$' + item.price
   $item.appendChild($img)
   $item.appendChild($name)
@@ -181,7 +183,7 @@ function renderAllCartItems(cart) {
   $heading.classList.add('text-center', 'p-5', 'text-uppercase')
   $heading.textContent = 'Shopping Cart'
   var $cart = document.createElement('div')
-  $cart.classList.add('list-group')
+  $cart.classList.add('m-3', 'row-justify-content-center')
   $container.appendChild($heading)
   $container.appendChild($cart)
 
@@ -191,12 +193,12 @@ function renderAllCartItems(cart) {
   }
 
   var count = document.createElement('div')
-  count.classList.add('item-count')
+  count.classList.add('col', 'align-self-end', 'text-right')
   count.textContent = cart.length + ' Item(s)'
   $cart.appendChild(count)
 
   var total = document.createElement('div')
-  total.classList.add('price')
+  total.classList.add('col', 'align-self-end', 'text-right')
   total.textContent = 'Total: $' + parseFloat(totalPrice(cart)).toFixed(2)
   console.log(total)
   $cart.appendChild(total)
@@ -253,12 +255,12 @@ function renderDetails(catalogItem) {
   var $container = document.createElement('div')
   $container.classList.add('m-3', 'row')
   var $img = document.createElement('img')
-  $img.classList.add('col-6', 'img-fluid')
+  $img.classList.add('img-wrapper', 'p-5')
   $img.setAttribute('src', catalogItem.imageUrl)
-  $img.setAttribute('style', 'width: 30rem')
-  $img.setAttribute('style', 'height: 25rem')
+  $img.setAttribute('style', 'width: 40rem')
+  $img.setAttribute('style', 'height: 50rem')
   var $itemBody = document.createElement('div')
-  $itemBody.classList.add('col')
+  $itemBody.classList.add('col', 'my-auto')
   var $name = document.createElement('h5')
   $name.classList.add('mt-5', 'text-left')
   $name.textContent = catalogItem.name
@@ -310,6 +312,15 @@ function showView(view) {
     }
   }
 }
+
+function changeClass() {
+  var $cartView = document.querySelector('[data-view="cart"]')
+  $cartView.classList.remove('hidden')
+  app.view = 'cart'
+  renderApp(app)
+}
+
+changeClass()
 
 function renderApp(app) {
   var $view = document.querySelector('[data-view="' + app.view + '"]')
