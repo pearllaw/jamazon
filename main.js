@@ -259,6 +259,10 @@ $cartView.addEventListener('click', function (event) {
     app.view = 'catalog'
     renderApp(app)
   }
+  if (event.target.getAttribute('id') === 'checkout-button') {
+    app.view = 'checkout'
+    renderApp(app)
+  }
 })
 
 function renderItemObject(itemId, catalogItems) {
