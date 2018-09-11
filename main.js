@@ -166,7 +166,7 @@ function renderCartItem(item) {
   $brand.textContent = item.brand
   var $price = document.createElement('h5')
   $price.classList.add('float-right')
-  $price.textContent = item.price
+  $price.textContent = '$' + item.price
   $item.appendChild($img)
   $item.appendChild($name)
   $item.appendChild($brand)
@@ -185,21 +185,33 @@ function renderAllCartItems(cart) {
   $container.appendChild($heading)
   $container.appendChild($cart)
 
-  for (var i = 0; i < app.cart.length; i++) {
+  for (var i = 0; i < cart.length; i++) {
     var cartItem = renderCartItem(cart[i])
-    var count = app.cart.length
-    var total = 0
-    for (cartItem in app.cart) {
-      total += app.cart[cartItem.price]
-    }
     $cart.appendChild(cartItem)
-    $cart.appendChild(count)
-    $cart.appendChild(total)
   }
+
+  var count = document.createElement('div')
+  count.classList.add('item-count')
+  count.textContent = cart.length + ' Item(s)'
+  $cart.appendChild(count)
+
+  var total = document.createElement('div')
+  total.classList.add('price')
+  total.textContent = 'Total: $' + parseFloat(totalPrice(cart)).toFixed(2)
+  console.log(total)
+  $cart.appendChild(total)
+
   return $container
 }
 
-renderAllCartItems()
+function totalPrice(item) {
+  var total = 0
+  for (var i = 0; i < item.length; i++) {
+    var itemPrice = item[i].price
+    total += itemPrice
+  }
+  return total
+}
 
 var $catalogView = document.querySelector('[data-view="catalog"]')
 $catalogView.addEventListener('click', function (event) {
@@ -308,6 +320,10 @@ function renderApp(app) {
   if (app.view === 'details') {
     $view.innerHTML = ''
     $view.appendChild(renderDetails(app.details.item))
+  }
+  if (app.view === 'cart') {
+    $view.innerHTML = ''
+    $view.appendChild(renderAllCartItems(app.cart))
   }
   showView(app.view)
   renderCartCount(app.cart)
