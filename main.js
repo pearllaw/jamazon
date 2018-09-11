@@ -248,6 +248,16 @@ $detailView.addEventListener('click', function (event) {
   }
 })
 
+var $cartCount = document.querySelector('.cart-count')
+$cartCount.addEventListener('click', function (event) {
+  if (event.target) {
+    var $cartView = document.querySelector('[data-view="cart"]')
+    $cartView.classList.remove('hidden')
+    app.view = 'cart'
+    renderApp(app)
+  }
+})
+
 var $cartView = document.querySelector('[data-view="cart"]')
 $cartView.addEventListener('click', function (event) {
   if (event.target.getAttribute('id') === 'shop-button') {
@@ -326,15 +336,6 @@ function showView(view) {
     }
   }
 }
-
-function changeClass() {
-  var $cartView = document.querySelector('[data-view="cart"]')
-  $cartView.classList.remove('hidden')
-  app.view = 'cart'
-  renderApp(app)
-}
-
-changeClass()
 
 function renderApp(app) {
   var $view = document.querySelector('[data-view="' + app.view + '"]')
