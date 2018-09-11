@@ -194,27 +194,31 @@ function renderAllCartItems(cart) {
 
   var count = document.createElement('div')
   count.classList.add('align-self-end', 'text-right')
-  count.textContent = cart.length + ' Item(s)'
+  count.textContent = totalCount(cart) + ' Item(s)'
   $container.appendChild(count)
 
   var total = document.createElement('div')
   total.classList.add('align-self-end', 'text-right')
   total.textContent = 'Total: $' + parseFloat(totalPrice(cart)).toFixed(2)
-  console.log(total)
   $container.appendChild(total)
 
   var button = document.createElement('button')
-  button.classList.add('btn', 'btn-outline-dark', 'center-block', 'm-3')
+  button.classList.add('btn', 'btn-outline-dark', 'center-block', 'm-3', 'mt-5')
   button.setAttribute('id', 'shop-button')
   button.textContent = 'Continue Shopping'
   $container.appendChild(button)
 
   var checkout = document.createElement('button')
-  checkout.classList.add('btn', 'btn-outline-dark', 'center-block', 'm-3')
+  checkout.classList.add('btn', 'btn-outline-dark', 'center-block', 'm-3', 'mt-5')
   checkout.setAttribute('id', 'checkout-button')
   checkout.textContent = 'Checkout'
   $container.appendChild(checkout)
   return $container
+}
+
+function totalCount(items) {
+  var count = items.length
+  return count
 }
 
 function totalPrice(item) {
@@ -359,8 +363,81 @@ function renderApp(app) {
     $view.innerHTML = ''
     $view.appendChild(renderAllCartItems(app.cart))
   }
+  if (app.view === 'checkout') {
+    $view.innerHTML = ''
+    $view.appendChild(renderCheckoutForm(app.cart))
+  }
   showView(app.view)
   renderCartCount(app.cart)
 }
 
 renderApp(app)
+
+function renderCheckoutForm(cart) {
+  var $container = document.createElement('div')
+  $container.classList.add('container', 'text-center')
+  var $heading = document.createElement('h1')
+  $heading.classList.add('text-center', 'text-uppercase', 'p-5')
+  $heading.textContent = 'Checkout'
+  var $info = document.createElement('div')
+  $info.classList.add('container', 'border', 'border-dark', 'p-5')
+  $info.textContent = 'Customer Information'
+  $container.appendChild($heading)
+  $container.appendChild($info)
+
+  var $name = document.createElement('div')
+  $name.classList.add('form-group', 'row')
+  var $nameLabel = document.createElement('label')
+  $nameLabel.setAttribute('for', 'NameInput')
+  $nameLabel.classList.add('col-sm-2', 'col-form-label')
+  $nameLabel.textContent = 'Name'
+  var $nameInput = document.createElement('input')
+  $nameInput.setAttribute('type', 'text')
+  $nameInput.classList.add('form-control')
+  $name.appendChild($nameLabel)
+  $name.appendChild($nameInput)
+
+  var $address = document.createElement('div')
+  $address.classList.add('form-group', 'row')
+  var $addressLabel = document.createElement('label')
+  $addressLabel.setAttribute('for', 'AddressInput')
+  $addressLabel.classList.add('col-sm-2', 'col-form-label')
+  $addressLabel.textContent = 'Address'
+  var $addressInput = document.createElement('input')
+  $addressInput.setAttribute('type', 'text')
+  $addressInput.classList.add('form-control')
+  $address.appendChild($addressLabel)
+  $address.appendChild($addressInput)
+
+  var $payment = document.createElement('div')
+  $payment.classList.add('form-group', 'row')
+  var $paymentLabel = document.createElement('label')
+  $paymentLabel.setAttribute('for', 'PaymentInput')
+  $paymentLabel.classList.add('col-sm-2', 'col-form-label')
+  $paymentLabel.textContent = 'Credit Card'
+  var $paymentInput = document.createElement('input')
+  $paymentInput.setAttribute('type', 'text')
+  $paymentInput.classList.add('form-control')
+  $payment.appendChild($paymentLabel)
+  $payment.appendChild($paymentInput)
+
+  var $count = document.createElement('div')
+  $count.classList.add('align-self-end', 'text-right')
+  $count.textContent = totalCount(cart) + ' Item(s)'
+  var $total = document.createElement('div')
+  $total.classList.add('align-self-end', 'text-right')
+  $total.textContent = 'Total: $' + totalPrice(cart)
+
+  var payButton = document.createElement('button')
+  payButton.classList.add('btn', 'btn-success', 'center-block', 'mt-5')
+  payButton.textContent = 'Pay'
+
+  $info.appendChild($name)
+  $info.appendChild($address)
+  $info.appendChild($payment)
+  $info.appendChild($count)
+  $info.appendChild($total)
+  $info.appendChild(payButton)
+
+  return $container
+}
