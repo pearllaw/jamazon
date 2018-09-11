@@ -193,15 +193,21 @@ function renderAllCartItems(cart) {
   }
 
   var count = document.createElement('div')
-  count.classList.add('col', 'align-self-end', 'text-right')
+  count.classList.add('align-self-end', 'text-right')
   count.textContent = cart.length + ' Item(s)'
-  $cart.appendChild(count)
+  $container.appendChild(count)
 
   var total = document.createElement('div')
-  total.classList.add('col', 'align-self-end', 'text-right')
+  total.classList.add('align-self-end', 'text-right')
   total.textContent = 'Total: $' + parseFloat(totalPrice(cart)).toFixed(2)
   console.log(total)
-  $cart.appendChild(total)
+  $container.appendChild(total)
+
+  var button = document.createElement('button')
+  button.classList.add('btn', 'btn-success', 'block', 'align-self-center')
+  button.setAttribute('id', 'shop-button')
+  button.textContent = 'Continue Shopping'
+  $container.appendChild(button)
 
   return $container
 }
@@ -237,6 +243,14 @@ $detailView.addEventListener('click', function (event) {
     renderApp(app)
   }
   if (event.target.getAttribute('id') === 'back-button') {
+    app.view = 'catalog'
+    renderApp(app)
+  }
+})
+
+var $cartView = document.querySelector('[data-view="cart"]')
+$cartView.addEventListener('click', function (event) {
+  if (event.target.getAttribute('id') === 'shop-button') {
     app.view = 'catalog'
     renderApp(app)
   }
